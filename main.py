@@ -22,6 +22,7 @@ class MyPlugin(Star):
 
     @issue.command("report")
     async def report_issue(self, event: AstrMessageEvent, issue_type_str: str, description: str):
+        """提交问题报告"""
         issue_type = IssueType(issue_type_str)
         reporter = event.get_sender_id()
         reporter_group = event.get_group_id() if not event.is_private_chat() else None
@@ -70,8 +71,9 @@ class MyPlugin(Star):
         )
         await event.send(MessageChain().message(response))
 
-    @filter.command("feedback")
+    @issue.command("feedback")
     async def feedback(self, event: AstrMessageEvent, issue_id: str, new_issue_type: str, feedback: str):
+        """反馈问题处理结果"""
         if event.get_sender_id() not in self.receivers:
             await event.send(MessageChain().message("您没有权限反馈问题。"))
             return
@@ -96,7 +98,7 @@ class MyPlugin(Star):
         await event.send(MessageChain().message(feedback_info))
         await self.send_notification(message_chain=MessageChain().message(feedback_info), receiver=reporter, receiver_group=reporter_group)
 
-    @filter.command("list")
+    @issue.command("list")
     async def list_issues(self, event: AstrMessageEvent, status: str = None):
         """列出所有问题记录"""
         if event.get_sender_id() not in self.receivers:
@@ -115,7 +117,7 @@ class MyPlugin(Star):
         )
         await event.send(MessageChain().message(response))
 
-    @filter.command("help")
+    @issue.command("help")
     async def help(self, event: AstrMessageEvent):
         """显示帮助信息"""
         help_info = (
