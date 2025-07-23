@@ -138,7 +138,7 @@ class MyPlugin(Star):
     async def send_notification(self, message_chain: MessageChain, receiver: str, receiver_group: str = None):
         """发送通知给接收者"""
         # QQ平台发送消息
-        qq_session = f"aiocqhttp:GroupMessage:{receiver_group}" if receiver_group else f"aiocqhttp:PrivateMessage:{receiver}"
+        qq_session = f"aiocqhttp:GroupMessage:{receiver_group}" if receiver_group else f"aiocqhttp:FriendMessage:{receiver}"
         if receiver_group:
             message_chain.chain.append(Comp.At(qq = receiver))
         await self.context.send_message(qq_session, message_chain)
