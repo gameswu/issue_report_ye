@@ -128,9 +128,9 @@ class MyPlugin(Star):
             "4. /issue list [状态] - 列出所有问题记录或指定状态的问题记录\n"
             "5. /issue help - 显示帮助信息\n"
             "支持的类型：\n"
-            f"{', '.join(IssueType.__members__.keys())}\n"
+            f"{', '.join(IssueType.__members__.values())}\n"
             "支持的状态：\n"
-            f"{', '.join(IssueStatus.__members__.keys())}"
+            f"{', '.join(IssueStatus.__members__.values())}"
         )
         await event.send(MessageChain().message(help_info))
 
