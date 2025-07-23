@@ -1,9 +1,17 @@
-# helloworld
+# 小夜的bug反馈插件
 
-AstrBot 插件模板
+> 这是一个 AstrBot 插件
+>
+> 用于反馈问题至小夜的开发者
 
-A template plugin for AstrBot plugin feature
+## 使用方法
 
-# 支持
+包含以下指令
 
-[帮助文档](https://astrbot.app)
+| 指令 | 参数  | 描述 |
+| ---- | ---- | ---- |
+| `/issue report` | `<类型> <描述>` | 提交问题报告 |
+| `/issue check` | - | 检查您提交的问题处理状态 |
+| `/issue feedback` | `<ID> <新类型> <反馈>` | 反馈问题处理结果 |
+| `/issue list` | `[状态]` | 列出所有问题记录或指定状态的问题记录 |
+| `/issue help` | - | 显示帮助信息 |

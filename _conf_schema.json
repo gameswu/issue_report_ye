@@ -1,0 +1,6 @@
+{
+    "receivers": {
+        "type": "list",
+        "description": "反馈接收者列表"
+    }
+}
