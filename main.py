@@ -1,7 +1,7 @@
 from astrbot.api.event import filter, AstrMessageEvent, MessageEventResult, MessageChain
 from astrbot.api.star import Context, Star, register
 from astrbot.api import logger, AstrBotConfig
-from astrbot.api.message_components import Comp
+import astrbot.api.message_components as Comp
 
 from .issue import Issue, IssueData, IssueType, IssueStatus, IssueManager
 
