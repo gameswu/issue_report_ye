@@ -1,5 +1,6 @@
 from enum import Enum
 from typing import Optional, List, Dict, Any
+from dataclasses import dataclass
 import uuid
 import datetime
 import json
@@ -17,13 +18,14 @@ class IssueStatus(Enum):
     CLOSED = "closed"
     REJECTED = "rejected"
 
+@dataclass
 class IssueData:
     type: IssueType
     status: IssueStatus
     description: str
     created_at: str
-    updated_at: Optional[str] = None
     reporter: str
+    updated_at: Optional[str] = None
     reporter_group: Optional[str] = None
 
 class Issue:
@@ -143,9 +145,11 @@ class IssueManager:
                 return issue
         return None
     
-    def get_issues_by_status(self, status: IssueStatus) -> List[Issue]:
-        """根据状态获取issues"""
+    def get_issues_by_status(self, status: Optional[IssueStatus]) -> List[Issue]:
+        """根据状态获取issues，如果status为None则返回所有issues"""
         issues = self.load_issues()
+        if status is None:
+            return issues
         return [issue for issue in issues if issue.data.status == status]
     
     def get_issues_by_type(self, issue_type: IssueType) -> List[Issue]:

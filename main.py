@@ -72,7 +72,7 @@ class MyPlugin(Star):
         await event.send(MessageChain().message(response))
 
     @issue.command("feedback")
-    async def feedback(self, event: AstrMessageEvent, issue_id: str, new_issue_type: str, feedback: str):
+    async def feedback(self, event: AstrMessageEvent, issue_id: str, new_status: str, feedback: str):
         """反馈问题处理结果"""
         if event.get_sender_id() not in self.receivers:
             await event.send(MessageChain().message("您没有权限反馈问题。"))
@@ -84,7 +84,7 @@ class MyPlugin(Star):
         reporter = issue.data.reporter
         reporter_group = issue.data.reporter_group
 
-        success = IssueManager().update_issue(issue_id=issue_id, new_issue_type=IssueType(new_issue_type))
+        success = IssueManager().update_issue(issue_id=issue_id, new_status=IssueStatus(new_status))
         if not success:
             await event.send(MessageChain().message("更新问题反馈失败。"))
             return
@@ -92,7 +92,7 @@ class MyPlugin(Star):
         feedback_info = (
             f"问题反馈已提交！\n"
             f"ID: {issue.id}\n"
-            f"新类型: {new_issue_type}\n"
+            f"新状态: {new_status}\n"
             f"反馈: {feedback}\n"
         )
         await event.send(MessageChain().message(feedback_info))
@@ -106,7 +106,8 @@ class MyPlugin(Star):
             return
         issues = IssueManager().get_issues_by_status(IssueStatus(status) if status else None)
         if not issues:
-            await event.send(MessageChain().message(f"没有找到任何{status}的问题记录。"))
+            status_desc = f"状态为{status}的" if status else ""
+            await event.send(MessageChain().message(f"没有找到任何{status_desc}问题记录。"))
             return
         response = (
             f"问题记录列表：\n" +
@@ -124,7 +125,7 @@ class MyPlugin(Star):
             "问题反馈插件使用帮助：\n"
             "1. /issue report <类型> <描述> - 提交问题报告\n"
             "2. /issue check - 检查您提交的问题处理状态\n"
-            "3. /issue feedback <ID> <新类型> <反馈> - 反馈问题处理结果\n"
+            "3. /issue feedback <ID> <新状态> <反馈> - 反馈问题处理结果\n"
             "4. /issue list [状态] - 列出所有问题记录或指定状态的问题记录\n"
             "5. /issue help - 显示帮助信息\n"
             "支持的类型：\n"
